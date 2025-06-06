@@ -36,6 +36,7 @@ uint8_t rnd() {
     a = (a ^ c) ^ x;
     b = b + a;
     c = (c + (b >> 1)) ^ a;
+    return c;
 }
 
 void init_rng(uint8_t s1, uint8_t s2, uint8_t s3) {
