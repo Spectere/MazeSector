@@ -189,16 +189,14 @@ draw_maze:
     mov ax, si
     mov bl, MAZE_WIDTH
     div bl
+    mov bx, (2 * 2)
     or ah, ah
-    jz .draw_maze_next_line
+    jnz .draw_maze_inc_index        ; Just advance to the next cell.
 
-    ; Nope. Advance two characters.
-    add di, (2 * 2)
-    jmp .draw_maze_new_cell
-
-.draw_maze_next_line:
-    ; Yep. Advance four characters.
-    add di, (4 * 2)
+    ; Advance to the next line by doubling the number of characters advanced.
+    shl bx, 1
+.draw_maze_inc_index:
+    add di, bx
     jmp .draw_maze_new_cell
 
     ; Draw the exits.
