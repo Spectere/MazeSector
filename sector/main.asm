@@ -32,9 +32,6 @@
     cli
 
     ; Set up segments.
-    xor ax, ax
-    mov di, ax
-
     mov ax, MAZE_MEM_SEG
     mov ds, ax
     mov es, ax
@@ -56,7 +53,6 @@
     ; Set extra segment to video RAM.
     mov ax, VIDEO_RAM_SEG
     mov es, ax
-    xor di, di  ; TODO: Remove me.
 
     ; Set up the initial maze cell.
     mov al, VISITED       ; Cell status
