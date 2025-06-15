@@ -157,6 +157,8 @@ draw:
     mov cx, 80 * 25
     rep stosw
 
+    mov cl, CHAR_VISITED_HORIZ
+
 draw_maze:
     ; Draw our beautiful maze.
     xor si, si
@@ -167,16 +169,16 @@ draw_maze:
     test al, EAST
     jz .draw_maze_check_south
 
-    mov [es:di], byte CHAR_VISITED_HORIZ
-    mov [es:di+2], byte CHAR_VISITED_HORIZ
-    mov [es:di+4], byte CHAR_VISITED_HORIZ
+    mov [es:di], cl
+    mov [es:di+2], cl
+    mov [es:di+4], cl
 
 .draw_maze_check_south:
     test al, SOUTH
     jz .draw_maze_next_cell
 
     mov [es:di], byte CHAR_VISITED_VERT
-    mov [es:di+(80*2)], byte CHAR_VISITED_HORIZ
+    mov [es:di+(80*2)], cl
 
 .draw_maze_next_cell:
     inc si
@@ -209,7 +211,6 @@ draw_exits:
 
     ; Draw the bar on the top of the screen.
     xor di, di
-    mov ax, 0x07DC  ; Grey, solid block
     mov cx, 80
     rep stosw
 
