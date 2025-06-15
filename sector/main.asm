@@ -104,8 +104,7 @@ generate_maze:
 
 .border_check_north:
     or al, al
-    jnz .check_neighbor
-    jmp .cell_at_border
+    jz .cell_at_border
 
 .check_neighbor:
     call get_delta
@@ -147,9 +146,8 @@ generate_maze:
     pop si
 .cell_at_border:
     cmp bl, 0b1111      ; See if all directions have been tried.
-    jz .next_cell       ; If so, move onto another cell.
-    jmp .rnd_movement   ; If not, try a different direction.
-.next_cell:
+    jnz .rnd_movement   ; If not, try a different direction.
+.next_cell:             ; If so, move onto another cell.
     jmp generate_maze
 
 draw:
