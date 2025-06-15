@@ -25,6 +25,11 @@
 %define STACK_TOP     0x1BFF
 %define VIDEO_RAM_SEG 0xB800
 
+%define RNG_X 0
+%define RNG_A 1
+%define RNG_B 2
+%define RNG_C 3
+
 ; =============================================================================
 ;  Code
 ; =============================================================================
@@ -215,28 +220,27 @@ rnd:
     ; Fast 8-bit PRNG
     ; https://www.stix.id.au/wiki/Fast_8-bit_pseudorandom_number_generator
     push si
-    mov ax, rng
-    mov si, ax
+    mov si, rng
 
     ; ++x
-    inc byte [cs:si]
+    inc byte [cs:si+RNG_X]
 
     ; a = (a ^ c) ^ x
-    mov al, [cs:si+1]
-    xor al, [cs:si+3]
-    xor al, [cs:si]
-    mov [cs:si+1], al
+    mov al, [cs:si+RNG_A]
+    xor al, [cs:si+RNG_C]
+    xor al, [cs:si+RNG_X]
+    mov [cs:si+RNG_A], al
 
     ; b = b + a
-    add [cs:si+2], al
+    add [cs:si+RNG_B], al
 
     ; c = (c + (b >> 1)) ^ a
-    mov dl, [cs:si+2]
+    mov dl, [cs:si+RNG_B]
     shr dl, 1
-    add [cs:si+3], dl
-    xor [cs:si+3], al
+    add [cs:si+RNG_C], dl
+    xor [cs:si+RNG_C], al
 
-    mov al, [cs:si+3]
+    mov al, [cs:si+RNG_C]
     pop si
     ret
 
