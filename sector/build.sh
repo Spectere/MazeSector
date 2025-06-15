@@ -47,5 +47,5 @@ nasm -f bin -o bin/boot.bin main.asm \
 && dd if=/dev/zero bs=${size} count=1 of=bin/maze.img \
 && dd if=bin/boot.bin bs=512 count=1 of=bin/maze.img conv=notrunc \
 && echo \
-&& python3 golf_score.py bin/boot.bin \
+&& if [[ -x $(which python3 2>/dev/null) ]]; then $(which python3) golf_score.py bin/boot.bin; fi \
 && echo
