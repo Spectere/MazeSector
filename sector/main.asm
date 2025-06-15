@@ -61,8 +61,7 @@
     push si
 generate_maze:
     cmp sp, STACK_TOP
-    jnz .generate_continue
-    jmp draw              ; Stack is empty. Draw the maze.
+    jz draw              ; Stack is empty. Draw the maze.
 
 .generate_continue:
     pop si
