@@ -261,22 +261,18 @@ rnd:
     ret
 
 get_delta:
-    cmp cl, GO_EAST
-    jz .delta_east
-    cmp cl, GO_NORTH
-    jz .delta_north
-    cmp cl, GO_SOUTH
-    jz .delta_south
-    mov dx, -1
-    ret
-.delta_east:
-    mov dx, 1
-    ret
-.delta_north:
-    mov dx, -MAZE_WIDTH
-    ret
-.delta_south:
+    cmp cl, 2
+    js .delta_horiz
     mov dx, MAZE_WIDTH
+    jz .delta_neg
+    ret
+.delta_horiz:
+    mov dx, 1
+    or cl, cl
+    jz .delta_neg
+    ret
+.delta_neg:
+    neg dx
     ret
 
 
