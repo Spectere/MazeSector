@@ -81,15 +81,17 @@ generate_maze:
     mov dl, MAZE_WIDTH
     div dl
 
-    cmp cl, GO_EAST
+    cmp cl, 1
+    js .border_check_west
     jz .border_check_east
-
-    cmp cl, GO_NORTH
+    cmp cl, 2
     jz .border_check_north
-
-    cmp cl, GO_SOUTH
-    jz .border_check_south
     
+.border_check_south:
+    cmp al, (MAZE_HEIGHT - 1)
+    jnz .check_neighbor
+    jmp .cell_at_border
+
 .border_check_west:
     or ah, ah
     jnz .check_neighbor
@@ -97,11 +99,6 @@ generate_maze:
 
 .border_check_east:
     cmp ah, (MAZE_WIDTH - 1)
-    jnz .check_neighbor
-    jmp .cell_at_border
-
-.border_check_south:
-    cmp al, (MAZE_HEIGHT - 1)
     jnz .check_neighbor
     jmp .cell_at_border
 
@@ -126,7 +123,7 @@ generate_maze:
     mov ah, 1
     shl ah, cl
     test cl, 1          ; We only care about east/south exits.
-    jnz .flag_current    ; If we are moving east/south, flag the current cell.
+    jnz .flag_current   ; If we are moving east/south, flag the current cell.
 
     shl ah, 1           ; Otherwise, shift the register and flag the *neighbor*
     or al, ah           ; as having an east/south exit.
