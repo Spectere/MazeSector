@@ -69,8 +69,6 @@ generate_maze:
     jmp draw              ; Stack is empty. Draw the maze.
 
 .generate_continue:
-    mov [es:di], byte '.'
-    add di, 2
     pop si
     xor bl, bl
 .rnd_movement:
@@ -159,8 +157,6 @@ generate_maze:
     jz .next_cell       ; If so, move onto another cell.
     jmp .rnd_movement   ; If not, try a different direction.
 .next_cell:
-    mov [es:di], byte ' '
-    sub di, 2
     jmp generate_maze
 
 draw:
