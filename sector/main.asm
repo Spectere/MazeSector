@@ -243,15 +243,15 @@ rnd:
     ret
 
 get_delta:
-    cmp cl, 2
-    js .delta_horiz
-    mov dx, MAZE_WIDTH
-    jz .delta_neg
-    ret
-.delta_horiz:
     mov dx, 1
+    cmp cl, dl
+    jg .delta_vert
+    jnz .delta_neg
+    ret
+.delta_vert:
+    mov dx, MAZE_WIDTH
     or cl, cl
-    jz .delta_neg
+    jpo .delta_neg
     ret
 .delta_neg:
     neg dx
