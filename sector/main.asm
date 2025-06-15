@@ -215,7 +215,6 @@ rnd:
     ; Fast 8-bit PRNG
     ; https://www.stix.id.au/wiki/Fast_8-bit_pseudorandom_number_generator
     push si
-    push bx
     mov ax, rng
     mov si, ax
 
@@ -232,13 +231,12 @@ rnd:
     add [cs:si+2], al
 
     ; c = (c + (b >> 1)) ^ a
-    mov bl, [cs:si+2]
-    shr bl, 1
-    add [cs:si+3], bl
+    mov dl, [cs:si+2]
+    shr dl, 1
+    add [cs:si+3], dl
     xor [cs:si+3], al
 
     mov al, [cs:si+3]
-    pop bx
     pop si
     ret
 
