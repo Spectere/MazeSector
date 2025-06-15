@@ -88,21 +88,17 @@ generate_maze:
     
 .border_check_south:
     cmp al, (MAZE_HEIGHT - 1)
-    jnz .check_neighbor
-    jmp .cell_at_border
-
-.border_check_west:
-    or ah, ah
-    jnz .check_neighbor
-    jmp .cell_at_border
+    jmp .border_check_jump
 
 .border_check_east:
     cmp ah, (MAZE_WIDTH - 1)
-    jnz .check_neighbor
-    jmp .cell_at_border
+    jmp .border_check_jump
 
+.border_check_west:
+    mov al, ah
 .border_check_north:
     or al, al
+.border_check_jump:
     jz .cell_at_border
 
 .check_neighbor:
