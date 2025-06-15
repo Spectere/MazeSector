@@ -56,7 +56,7 @@
 
     ; Set up the initial maze cell.
     mov al, VISITED       ; Cell status
-    mov si, 0             ; Cell index
+    xor si, si            ; Cell index
     mov [ds:si], al
     push si
 generate_maze:
@@ -159,7 +159,7 @@ draw:
 
 draw_maze:
     ; Draw our beautiful maze.
-    mov si, 0
+    xor si, si
     mov di, 81 * 2      ; Second line, second character.
 
 .draw_maze_new_cell:
@@ -208,7 +208,7 @@ draw_exits:
     mov [es:di + (1919 * 2)], ax
 
     ; Draw the bar on the top of the screen.
-    mov di, 0
+    xor di, di
     mov ax, 0x07DC  ; Grey, solid block
     mov cx, 80
     rep stosw
