@@ -99,7 +99,7 @@ int get_unvisited_cell_count(int cell) {
     if(target >= 0 && maze[target] == NOT_VISITED) count++;
 
     target = get_target_cell(cell, GO_WEST);
-    if(target >= 0 && maze[target] & NOT_VISITED) count++;
+    if(target >= 0 && maze[target] == NOT_VISITED) count++;
 
     return count;
 }
@@ -199,7 +199,7 @@ int main(int argc, char **argv) {
     generate_maze();
 
     draw_maze();
-    printf("\n\n");
+    printf("\n\n  maximum stack entries: %i\n\n", max_stack);
 
     return 0;
 }
