@@ -74,8 +74,8 @@ generate_maze:
 .rnd_movement:
     ; Get direction to traverse.
     call rnd
+    and al, 0b11
     mov cl, al
-    and cl, 0b11
     mov al, 1
     shl al, cl
     or bl, al
