@@ -85,10 +85,9 @@ generate_maze:
     mov dl, MAZE_WIDTH
     div dl
 
-    cmp cl, 1
-    js .border_check_west
-    jz .border_check_east
     cmp cl, 2
+    jpe .border_check_east
+    js .border_check_west
     jz .border_check_north
     
 .border_check_south:
