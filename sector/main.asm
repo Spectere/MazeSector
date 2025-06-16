@@ -17,12 +17,12 @@
 %define CHAR_VISITED_HORIZ 0xDC
 %define CHAR_VISITED_VERT  0x20
 
-%define MAZE_MEM_SEG 0x0050  ; Start of conventional memory.
+%define MAZE_MEM_SEG 0x0100
 %define MAZE_WIDTH   39
 %define MAZE_HEIGHT  24
 
-%define STACK_SEG     0x0600
-%define STACK_TOP     0x1BFF
+%define STACK_SEG     0x0D00
+%define STACK_TOP     STACK_SEG
 %define VIDEO_RAM_SEG 0xB800
 
 %define RNG_X 0
@@ -42,9 +42,9 @@
     mov es, ax
 
     ; Set stack segment and pointer.
-    mov ax, STACK_SEG
+    mov ah, STACK_SEG >> 8
     mov ss, ax
-    mov sp, STACK_TOP
+    mov sp, ax
 
     ; Set video mode.
     mov ax, 0x0002  ; 80x25, text
@@ -56,7 +56,7 @@
     rep stosb
 
     ; Set extra segment to video RAM.
-    mov ax, VIDEO_RAM_SEG
+    mov ah, VIDEO_RAM_SEG >> 8
     mov es, ax
 
     ; Set up the initial maze cell.
